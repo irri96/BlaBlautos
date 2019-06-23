@@ -1,17 +1,50 @@
 {% extends 'base.html' %}
 
-{% load crispy_forms_tags %}
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block title %}
+      <h2>Registrarse como {{ user_type }}</h2>
+{% endblock %}
+
 
 {% block content %}
   <div class="row">
     <div class="col-md-8 col-sm-10 col-12">
-      <h2>Sign up as a {{ user_type }}</h2>
-      <form method="post" novalidate>
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-success">Sign up</button>
+
+      <form action="" method="post" > {% csrf_token %}
+        <!-- <input type="hidden" name="next" value="{{ next }}"> -->
+        {{ form.as_table }}
+
+      <section class="wrapper style3 container special">
+          <ul class="buttons">
+            <li><button type="submit" class ="button"> Registrarme </button> </li>
+          </ul>
+      </section>
+
       </form>
+
     </div>
   </div>
 {% endblock %}
