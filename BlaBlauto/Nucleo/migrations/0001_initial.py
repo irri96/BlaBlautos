@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
             name='StudentAnswer',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('answer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='classroom.Answer')),
+                ('answer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='Nucleo.Answer')),
             ],
         ),
         migrations.CreateModel(
@@ -86,14 +86,14 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('score', models.FloatField()),
                 ('date', models.DateTimeField(auto_now_add=True)),
-                ('quiz', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='taken_quizzes', to='classroom.Quiz')),
+                ('quiz', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='taken_quizzes', to='Nucleo.Quiz')),
             ],
         ),
         migrations.CreateModel(
             name='Student',
             fields=[
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('interests', models.ManyToManyField(related_name='interested_students', to='classroom.Subject')),
+                ('interests', models.ManyToManyField(related_name='interested_students', to='Nucleo.Subject')),
             ],
         ),
         migrations.AddField(
@@ -104,17 +104,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='quiz',
             name='subject',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quizzes', to='classroom.Subject'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quizzes', to='Nucleo.Subject'),
         ),
         migrations.AddField(
             model_name='question',
             name='quiz',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='classroom.Quiz'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='Nucleo.Quiz'),
         ),
         migrations.AddField(
             model_name='answer',
             name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='classroom.Question'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='Nucleo.Question'),
         ),
         migrations.AddField(
             model_name='user',
@@ -129,16 +129,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='takenquiz',
             name='student',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='taken_quizzes', to='classroom.Student'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='taken_quizzes', to='Nucleo.Student'),
         ),
         migrations.AddField(
             model_name='studentanswer',
             name='student',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quiz_answers', to='classroom.Student'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quiz_answers', to='Nucleo.Student'),
         ),
         migrations.AddField(
             model_name='student',
             name='quizzes',
-            field=models.ManyToManyField(through='classroom.TakenQuiz', to='classroom.Quiz'),
+            field=models.ManyToManyField(through='Nucleo.TakenQuiz', to='Nucleo.Quiz'),
         ),
     ]

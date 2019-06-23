@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms.utils import ValidationError
 
-from classroom.models import (Answer, Question, Student, StudentAnswer,
+from Nucleo.models import (Answer, Question, Student, StudentAnswer,
                               Subject, User)
 
 
