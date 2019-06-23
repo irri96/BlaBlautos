@@ -21,5 +21,5 @@ urlpatterns = [
     path(r'reservasviaje/rechazar/<int:id>/', RechazarReserva, name="rechazar_reserva"),
     path('reservar/<int:pk>/<str:origen>/<str:destino>',reservar,name='ReservarViaje'),
     path(r'reservantes/<int:id>/', VerReservantes, name="ver_reservantes"),
-
+ 
 ]
