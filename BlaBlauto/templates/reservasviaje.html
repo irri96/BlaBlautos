@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <h2>Mis viajes</h2>
+  <div class="card">
+        <table class="table mb-0">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+
+            {% if not reservas%}
+
+            <tr>
+                <td style="text-align:center"> Este viaje no tiene reservas.</td>
+            </tr>
+            {% else %}
+
+                <thead>
+                    <tr>
+                        <th class="align-middle"  colspan="3"> Pasajero </th>
+                        <th class="align-middle"  colspan="3"> Ciudad Destino </th>
+                        <th class="align-middle"  colspan="3"> Hora de inicio </th>
+
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                        <tr>
+
+                            <td class="align-middle"  colspan="3">
+                                <a href="/perfil/{{ reserva.pasajero.user.id }}/">
+                                    {{ reserva.pasajero.user.username }}
+                                </a>
+                            </td>
+                            <td class="align-middle"  colspan="3"> {{reserva.tramos.first.ciudad_origen}} </td>
+                            <td class="align-middle"  colspan="3"> {{reserva.tramos.first.ciudad_destino}} </td>
+                            <td class="align-middle" >
+                                {% if not viaje.realizado %}
+                                {% if reserva.estado_reserva != reserva.ACEPTADO %}
+                                <a href="/reservasviaje/confirmar/aceptar/{{reserva.id}}/" class="button"> Aceptar</a>
+                                {% endif %}
+                                {% if reserva.estado_reserva != reserva.RECHAZADO %}
+                                <a href="/reservasviaje/confirmar/rechazar/{{reserva.id}}/" class="button"> Rechazar</a>
+                                {% endif %}
+                                    {% if reserva.estado_reserva == 3 %}
+
+                                        <span class="icon fa-times" style="color: #df7b77"></span>
+                                    {% elif reserva.estado_reserva == 2 %}
+                                        <span class="icon fa-check" style="color: aquamarine"></span>
+                                    {% elif reserva.estado_reserva == 1 %}
+                                        <span class="icon fa-question" style="color: #e1b89b"></span>
+
+                                    {% endif %}
+                                {% else %}
+                                Viaje realizado
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+  </div>
+{% endblock %}

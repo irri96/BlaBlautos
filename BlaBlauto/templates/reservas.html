@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Mis Reservas</h2>
+{% endblock %}
+
+{% block content %}
+
+  <div class="card">
+        <table class="table mb-0">
+            {% if not lista %}
+            <tr>
+                <td style="text-align:center"> No tienes ninguna reserva de viaje  </td>
+            </tr>
+            {% else %}
+                <thead>
+                    <tr>
+                        <th class="align-middle"  > Ciudad Origen </th>
+                        <th class="align-middle"  > Ciudad Destino </th>
+                        <th class="align-middle"  > Fecha de viaje </th>
+                        <th class="align-middle"  > Estado de pago </th>
+                        <th class="align-middle"  > Estado de reserva</th>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for inicio,fin,estado,eres, ides in lista%}
+                        <section class="wrapper style1 container special">
+                                            <div class="row">
+
+                    <div class="col-4 col-12-narrower">
+                        {{ inicio.ciudad_origen }}->{{ fin.ciudad_destino }}
+                        </div>
+
+                    </div>
+
+                        </section>
+
+
+                        <tr>
+                            <td class="align-middle"  > {{inicio.ciudad_origen}}  </td>
+                            <td class="align-middle"  > {{fin.ciudad_destino}} </td>
+                            <td class="align-middle" > {{inicio.hora_inicio}} </td>
+                            <td class="align-middle"  > {{estado | yesno:"Pagado, No pagado"}} </td>
+                            <td class="align-middle"  >
+                            {% if eres == 1 %}
+                                En espera
+                            {% elif eres == 2 %}
+                                Aceptada
+                            {% elif eres == 3 %}
+                                Rechazada
+                            {% endif %}
+                            </td>
+                            <td class="align-middle" >
+                                {% now "Y-n-j" as today %}
+                                {% if today <= inicio.viaje.tiempo_inicio|date:"Y-n-j" %}
+                                    <a href="/confirmar/{{ides}}/" class="btn btn-success"> Cancelar reserva </a>
+                                {% else %}
+                                    Viaje realizado
+                                {% endif %}
+                            </td>
+                            <td class="align-middle" >
+                                <a href="/viaje/{{inicio.viaje.id}}/" class="btn btn-success"> Ver viaje </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+  </div>
+{% endblock %}

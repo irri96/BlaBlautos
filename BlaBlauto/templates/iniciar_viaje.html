@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2> <strong> Iniciar Viaje </strong></h2>
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+        <table class="table mb-0">
+            {% if not viajes %}
+            <tr>
+                <td style="text-align:center"> No tienes ningún viaje para iniciar hoy :( </td>
+            </tr>
+            {% else %}
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            <h2> Viajes a iniciar hoy </h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th  > Ciudad Inicio </th>
+                        <th  > Ciudad Destino </th>
+                        <th> Fecha de viaje </th>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                <form action="" method="POST"> {% csrf_token %}
+                    {% for viaje, tramos in viajes %}
+                        <tr>
+                            <td   > {{viaje.ciudad_origen}} </td>
+                            <td   > {{viaje.ciudad_destino}} </td>
+                            <td  > {{viaje.tiempo_inicio}} </td>
+                            <td  >
+                                {% if not viaje.en_curso and not en_viaje%}
+                                    <input type="submit" name={{viaje.id}} value="iniciar" id={{viaje.id}} >
+                                {% elif en_viaje and not viaje.en_curso %}
+                                    <input type="submit" disabled value="Iniciar">
+                                {% else %}
+                                    <a href="/viaje/administrar_viaje/{{viaje.id}}" class="button" > Administrar </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h3> <strong>Detalles </strong></h3>
+                            </td>
+                            <td> {% now "H-i" as hora %}
+                                {% now "i" as minuto %}
+                                {% if viaje.en_curso %}
+                                    <h3 style="color:#00DD07"> en curso </h3>
+                                {% elif viaje.tiempo_inicio|date:"H-i" <= hora %}
+                                    <h3 style="color:#FF0000"> ATRASADO {{today}} </h3>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% for tramo in tramos %}
+                            <tr>
+                                <td> Parada </td>
+                                <td> Inicio </td>
+                                <td> Destino </td>
+                                <td> Asientos libres </td>
+                            </tr>
+                            <tr>
+                                <td> {{forloop.counter}} </td>
+                                <td> {{tramo.ciudad_origen}} </td>
+                                <td> {{tramo.ciudad_destino}} </td>
+                                <td> {{tramo.asientos_libres}} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </form>
+                </tbody>
+            {% endif %}
+        </table>
+      <br/>
+      {% if futuros %}
+        <table>
+            <tr>
+                <th colspan="3">
+                    <h2> Próximos viajes </h2>
+                </th>
+            </tr>
+            <tr>
+                <td> Ciudad Inicio </td>
+                <td> Ciudad Destino </td>
+                <td> Fecha </td>
+            </tr>
+            {% for viaje in futuros %}
+                <tr>
+                    <td> {{viaje.ciudad_origen}} </td>
+                    <td> {{viaje.ciudad_destino}} </td>
+                    <td> {{viaje.tiempo_inicio}} </td>
+                </tr>
+            {% endfor %}
+        </table>
+      {% endif %}
+  </div>
+{% endblock %}

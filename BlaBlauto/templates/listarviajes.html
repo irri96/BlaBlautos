@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+      <h2>Mis viajes</h2>
+  <div class="card">
+        <table class="table mb-0">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+
+            {% if not viajes%}
+
+            <tr>
+                <td style="text-align:center"> No tienes ningún viaje, <a href = "/crear">crea uno ya!</a> </td>
+            </tr>
+            {% else %}
+
+                <thead>
+                    <tr>
+                        <th class="align-middle"  colspan="3"> Ciudad Origen </th>
+                        <th class="align-middle"  colspan="3"> Ciudad Destino </th>
+                        <th class="align-middle"  colspan="3"> Hora de inicio </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for viaje in viajes %}   
+                        <tr>
+
+                            <td class="align-middle"  colspan="3"> {{ viaje.ciudad_origen }} </td>
+                            <td class="align-middle"  colspan="3"> {{viaje.ciudad_destino}} </td>
+                            <td class="align-middle"  colspan="3"> {{viaje.tiempo_inicio}} </td>
+                            <td class="align-middle" >
+                                {% if not viaje.realizado %}
+                                <a href="/viaje/{{viaje.id}}/" style="font-size: x-small " class="button primary"> Ver detalles </a>
+                                <a href="/reservasviaje/{{viaje.id}}/" style="font-size: x-small " class="button primary"> Ver reservas </a>
+                                <a href="/cancelarviaje/confirmar/{{viaje.id}}/" style="font-size: x-small " class="button primary"> Cancelar viaje </a>
+                                {% else %}
+                                <a href="/viaje/{{viaje.id}}/" style="font-size: x-small " class="button primary"> Ver detalles </a>
+                                Viaje realizado
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+  </div>
+{% endblock %}

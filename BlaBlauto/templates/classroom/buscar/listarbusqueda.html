@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Hora</th>
+        <th>Chofer</th>
+          <th></th>
+            <th></th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for viaje in object_list%}
+          <tr>
+            <td class="align-middle">{{ viaje.mi_origen}}</td>
+            <td class="align-middle">{{ viaje.mi_destino}}</td>
+            <td class="align-middle">{{ viaje.lahora }} </td>
+            <td class="align-middle">
+                <a href="/perfil/{{ viaje.conductor.user.id }}/"> {{ viaje.conductor.user.username }}</a>
+            </td>
+            <td class="align-middle">
+                <a href="/reservar/{{ viaje.pk }}/{{ viaje.mi_origen }}/{{ viaje.mi_destino }}" class="btn btn-success">Reservar</a>
+            </td>
+            <!--MIO-->
+            <td class="align-middle">
+                <a href="/viaje/{{ viaje.pk }}" class="btn btn-success">Detalles</a>
+            </td>
+            <!--MIO-->
+
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="4">No se han encontrado viajes :(<span</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

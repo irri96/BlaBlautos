@@ -1,0 +1,21 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+  <h2>Bienvenido a Carpool </h2>
+  <p class="lead">
+  {% if user.is_authenticated %}
+    {% if user.es_pasajero %}
+        <a href="{% url 'Buscar' %}">Buscar un viaje</a>
+      <br/>
+        <a href="{% url 'mis_reservas' %} "> Ver viajes reservados </a>
+    {% else %}
+        <a href="{% url 'CrearViaje' %}">Crear un viaje</a>
+    {% endif %}
+  {% else %}
+        Si ya tienes cuenta, <a href="{% url 'login' %}">ingresa</a>. Si te quieres unir, puedes comenzar por
+      crear una <a href="{% url 'pasajero_signup' %}">cuenta de pasajero</a> o una <a href="{% url 'chofer_signup' %}">cuenta de chofer</a>.
+
+  {% endif %}
+  </p>
+
+{% endblock %}

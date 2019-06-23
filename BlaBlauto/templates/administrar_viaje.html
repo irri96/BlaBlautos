@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2> <strong> Administrar viaje </strong></h2>
+
+      {% if ERROR %} <h3 style="color:#FF0000"> {{ERROR}} </h3> {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+        <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th colspan="5">
+                            <h2> <strong> Paradas </strong> </h2>
+                        </th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                <form action="" method="POST"> {% csrf_token %}
+                        {% for tramo, reservas, bajadas in tramos %}
+                            <tr>
+                                <td>  <strong> PARADA {{forloop.counter}} </strong> </td>
+                                <td> Inicio: <strong> {{tramo.ciudad_origen}} </strong>  </td>
+                                <td> Destino: <strong> {{tramo.ciudad_destino}} </strong>   </td>
+                                <td> Asientos libres: <strong> {{tramo.asientos_libres}} </strong>  </td>
+                                {% if not reservas %} <td> <strong> No se suben pasajeros </strong> </td> {% endif %}
+                            </tr>
+                            {% if reservas %}
+                            <tr>
+                                <td colspan="3"> Pasajeros </td>
+                                <th > ¿Se subió su pasajero? </th>
+                            </tr>
+                            {% for reserva in reservas %}
+                                <tr>
+                                    <td> Nombre:  </td>
+                                    <td> {{reserva.pasajero}}  </td>
+                                    <td></td>
+
+                                    <td>
+                                        <input type="radio" id=si+{{reserva}} name={{reserva}}  value="si">
+                                        <label for=si+{{reserva}}> Si </label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id=no+{{reserva}} name={{reserva}} value="no">
+                                        <label for=no+{{reserva}}> No </label>
+                                    </td>
+                                    <td> <br/> </td>
+                                </tr>
+                    <tr>
+                        <td> <br/> </td>
+                    </tr>
+                            {% endfor %}
+                            {% endif %}
+                            {% if bajadas %}
+                                <tr>
+                                    <td> BAJADAS: </td>
+                                </tr>
+                                {% for bajada, tramo_bajada in bajadas %}
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="3">
+                                            {{ bajada.pasajero }} se baja en {{ tramo_bajada.ciudad_destino }}
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td> No se bajan pasajeros </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th colspan="5">
+                            <br/>
+                            <input type="submit" value="Finalizar">
+                        </th>
+                    </tr>
+                </form>
+                </tbody>
+        </table>
+  </div>
+{% endblock %}

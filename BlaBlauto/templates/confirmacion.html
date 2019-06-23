@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h2> Confirmación </h2>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th colspan="2">
+                    <h2> <strong> {{mensaje}} </strong> </h2>
+                </th>
+            </tr>
+            </thead>
+            <tr>
+                {% if reserva_rechazada or reserva_aceptada %}
+                <td class="align-middle"  > Pasajero </td>
+                {% endif %}
+                <td class="align-middle"  > Ciudad Origen </td>
+                <td class="align-middle"  > Ciudad Destino </td>
+                <td class="align-middle"  > Fecha de viaje </td>
+            </tr>
+            {% if reserva %}
+            <tr>
+                <td> {{reserva.tramos.first.ciudad_origen}} </td>
+                <td> {{reserva.tramos.last.ciudad_destino}} </td>
+                <td> {{reserva.tramos.first.viaje.tiempo_inicio}} </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br/>
+                    <a href="/cancelar/{{reserva.id}}/" class="button"> Si, cancelar reserva </a>
+                </td>
+                <td>
+                    <br/>
+                    <a href="{% url 'mis_reservas' %}" class="button"> No </a>
+                </td>
+            </tr>
+            {% elif viaje %}
+            <tr>
+                <td> {{viaje.ciudad_origen}} </td>
+                <td> {{viaje.ciudad_destino}} </td>
+                <td> {{viaje.tiempo_inicio}} </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br/>
+                    <a href="/viaje/administrar_viaje/{{viaje}}/" class="button"> Si, iniciar viaje </a>
+                </td>
+                <td>
+                    <br/>
+                    <a href="{% url 'iniciar_viaje' %}" class="button"> Aún no </a>
+                </td>
+            </tr>
+
+
+            {% elif reserva_aceptada %}
+            <tr>
+                <td> {{reserva_aceptada.pasajero.user.username}} </td>
+                <td> {{reserva_aceptada.tramos.first.ciudad_origen}} </td>
+                <td> {{reserva_aceptada.tramos.last.ciudad_destino}} </td>
+                <td> {{reserva_aceptada.tramos.first.viaje.tiempo_inicio}} </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br/>
+                    <a href="/reservasviaje/aceptar/{{reserva_aceptada.id}}/" class="button"> Sí, aceptar reserva </a>
+                </td>
+                <td>
+                    <br/>
+                    <a href="/reservasviaje/{{ reserva_aceptada.tramos.first.viaje.id }}" class="button"> No </a>
+                </td>
+            </tr>
+            {% elif reserva_rechazada%}
+            <tr>
+                <td> {{reserva_rechazada.pasajero.user.username}} </td>
+                <td> {{reserva_rechazada.tramos.first.ciudad_origen}} </td>
+                <td> {{reserva_rechazada.tramos.last.ciudad_destino}} </td>
+                <td> {{reserva_rechazada.tramos.first.viaje.tiempo_inicio}} </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br/>
+                    <a href="/reservasviaje/rechazar/{{reserva_rechazada.id}}/" class="button"> Sí, rechazar reserva </a>
+                </td>
+                <td>
+                    <br/>
+                    <a href="/reservasviaje/{{ reserva_rechazada.tramos.first.viaje.id }}" class="button"> No </a>
+                </td>
+            </tr>
+            {% elif viaje_cancelado%}
+            <tr>
+                <td> {{viaje_cancelado.ciudad_origen}} </td>
+                <td> {{viaje_cancelado.ciudad_destino}} </td>
+                <td> {{viaje_cancelado.tiempo_inicio}} </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br/>
+                    <a href="/cancelarviaje/{{viaje_cancelado.id}}/" class="button"> Sí, cancelar viaje </a>
+                </td>
+                <td>
+                    <br/>
+                    <a href="/listarviajes/" class="button"> No </a>
+                </td>
+            </tr>
+
+            {% endif %}
+        </table>
+    </div>
+{% endblock %}

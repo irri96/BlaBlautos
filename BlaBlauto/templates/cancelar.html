@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Mis Reservas</h2>
+    <div class="card">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <td colspan="3">
+                    <h2>¿Está seguro que desea eliminar su reserva?</h2>
+
+                </td>
+            </tr>
+            </thead>
+            <tr>
+                <th class="align-middle"  > Ciudad Origen </th>
+                <th class="align-middle"  > Ciudad Destino </th>
+                <th class="align-middle"  > Fecha de viaje </th>
+            </tr>
+            <tr>
+                <td> {{reservas.0.tramo.ciudad_origen}} </td>
+                <td> {{reservas.1.tramo.ciudad_destino}} </td>
+                <td> {{reservas.0.tramo.viaje.tiempo_inicio}} </td>
+            </tr>
+            <tr>
+                <td ></td>
+                <td colspan="2">
+                    <a href="/cancelar/{{ides}}/" class="btn btn-success"> Cancelar reserva </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

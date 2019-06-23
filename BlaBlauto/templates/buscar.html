@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+<h2>Buscar viaje</h2>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8 col-sm-10 col-12">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {{ form|crispy }}
+        <br/>
+        <button type="submit" class="btn btn-success">Buscar</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

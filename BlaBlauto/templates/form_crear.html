@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}
+	Crear viaje
+{% endblock %}
+
+{% block content %}
+ <form  enctype="multipart/form-data" action="" method="POST"> {% csrf_token %}
+ 	{{ form }}
+ 	<br/>
+ 	Añadir Paradas: <br/>
+	<input type="button" value="A&ntilde;adir" onClick="elemento_file(0)">
+	<input type="button" value="Quitar" onClick="elemento_file(1)">
+     <hr>
+	<div id="elementos"> </div><p>
+	<br/>
+	<input type="submit" value="Listo">
+</form>
+    <script type="text/javascript">
+    var hora = document.getElementById("id_tiempo_inicio");
+    hora.type="datetime-local";
+    document.getElementById("id_tiempo_final").type="datetime-local";
+    </script>
+    <script type="text/javascript">
+    var hora = document.getElementById("id_tiempo_inicio");
+    hora.type="datetime-local";
+    document.getElementById("id_tiempo_final").type="datetime-local";
+    </script>
+    <script language="JavaScript" type="text/javascript">
+var cont = 1;
+function elemento_file(x){
+var divele=document.getElementById("elementos");
+if(x==1){
+if(divele.lastChild){
+divele.removeChild(divele.lastChild);
+divele.removeChild(divele.lastChild);
+divele.removeChild(divele.lastChild);
+divele.removeChild(divele.lastChild);
+divele.removeChild(divele.lastChild);
+divele.removeChild(divele.lastChild);
+divele.removeChild(divele.lastChild);
+    }
+}
+else {
+salto=document.createElement("br");
+puesto=document.createTextNode("Parada ");
+ele=document.createElement("input");
+ele.id = ele.id.concat("lugar"+cont.toString());
+separador = document.createElement("div");
+separador.className="horizontalgap";
+separador.style.cssFloat="left";
+separador.style.width="10px";
+separador.style.overflow="hidden";
+separador.style.height="1px";
+puesto2=document.createTextNode(" Hora de llegada ");
+ele2=document.createElement("input");
+ele2.id = ele2.id.concat("hora"+cont.toString());
+ele2.type="datetime-local";
+tiempo_inicio = document.getElementById("id_tiempo_inicio").value;
+if(tiempo_inicio){
+    ele2.value = tiempo_inicio;
+}
+cont= cont+1;
+separacion=document.createElement("hr");
+ele.type="text";
+ele.name="lugar"+cont.toString();
+ele2.name="hora"+cont.toString();
+divele.appendChild(puesto);
+divele.appendChild(ele);
+divele.appendChild(separador);
+divele.appendChild(puesto2);
+divele.appendChild(ele2);
+divele.appendChild(salto);
+divele.appendChild(separacion);
+console.log("aaaaapotoooooooo");
+    }
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      {% if user.id == usuario.id %}
+        <h2>Mi Perfil</h2>
+      {% else %}
+        {% if usuario.es_pasajero %}
+          <h2>Perfil de pasajero</h2>
+        {% else %}
+          {% if usuario.es_chofer %}
+            <h2>Perfil de conductor</h2>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+  <div class="card">
+        <h1><b>Nombre:</b> {{usuario.username}}</h1>
+        <h1><b>Fecha de Nacimiento:</b> {{usuario.nacimiento}}</h1>
+        <h1><b>Celular:</b> {{usuario.celular}}</h1>
+        <h1>
+        {% if usuario.musica %}
+            <b>Música:</b> Sí,&nbsp
+        {% else %}
+            <b>Música:</b> No,&nbsp
+        {% endif %}
+        {% if usuario.fumador %}
+            <b>Fumador:</b> Sí,&nbsp
+        {% else %}
+            <b>Fumador:</b> No,&nbsp
+        {% endif %}
+        {% if usuario.mascotas %}
+            <b>Mascotas:</b> Sí
+        {% else %}
+            <b>Mascotas:</b> No
+        {% endif %}
+        </h1>
+        <h1><b>Descripción:</b> {{usuario.descripcion}}</h1>
+
+  {% if usuario.es_chofer%}
+  <h2>Información vehicular</h2>
+  <h1><b>Licencia:</b> {{chofer.licencia}}</h1>
+  <h1><b>Clase:</b> {{chofer.clase}}</h1>
+  <h1><b>Patente:</b> {{chofer.patente}}</h1>
+  <h1><b>Marca:</b> {{chofer.marca}}</h1>
+  <h1><b>Modelo:</b> {{chofer.modelo}}</h1>
+  <h1><b>Año:</b> {{chofer.año}}</h1>
+  <h1><b>Color:</b> {{chofer.color}}</h1>
+  <h1><b>Asientos:</b> {{chofer.asientos}}</h1>
+  {% endif %}
+  </div>
+{% endblock %}

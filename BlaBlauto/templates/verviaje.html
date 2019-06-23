@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <h2>Viaje de: 
+        <a href = "/perfil/{{viaje.conductor.user.id}}/"><font color="#2fd0d8">{{viaje.conductor.user.username}}</font> </a> 
+      </h2>
+  <div class="card">
+        <table class="table mb-0">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+
+            {% if not viaje%}
+
+            <tr>
+                <td style="text-align:center"> No existe el viaje, <a href = "/crear">crea uno ya!</a> </td>
+            </tr>
+            {% else %}
+
+                <thead>
+                    <tr>
+                        <th class="align-middle"  colspan="5"> Ciudad Origen </th>
+                        <th class="align-middle"  colspan="5"> Ciudad Destino </th>
+                        <th class="align-middle"  colspan="5"> Hora de inicio </th>
+                        <th class="align-middle"  colspan="5"> Asientos Libres </th>
+                        <th class="align-middle"  colspan="5"> Precio </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tramo in tramos %}
+                        <tr>
+
+                            <td class="align-middle"  colspan="5"> {{tramo.ciudad_origen}} </td>
+                            <td class="align-middle"  colspan="5"> {{tramo.ciudad_destino}} </td>
+                            <td class="align-middle"  colspan="5"> {{tramo.hora_inicio}} </td>
+                            <td class="align-middle"  colspan="5"> {{tramo.asientos_libres}}/{{tramo.viaje.asientos}} </td>
+                            <td class="align-middle"  colspan="5"> {{tramo.precio}}</td>
+                            <td class="align-middle" >
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+        <a href="/reservantes/{{viaje.id}}/" style="font-size: x-small " class="button primary"> Ver pasajeros </a>
+  </div>
+{% endblock %}

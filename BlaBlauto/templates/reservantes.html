@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <h2>Pasajeros</h2>
+  <div class="card">
+        <table class="table mb-0">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+
+            {% if not pasajeros%}
+
+            <tr>
+                <td style="text-align:center"> Este viaje no tiene pasajeros. </td>
+            </tr>
+            {% else %}
+                <tbody>
+                    {% for pasajero in pasajeros %}
+                        <a href = "/perfil/{{pasajero.user.id}}/"><font color="#2fd0d8">{{pasajero.user.username}}</font> <br></a> 
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+  </div>
+{% endblock %}

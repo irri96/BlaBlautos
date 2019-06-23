@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% extends 'base.html' %}
+<title>Error</title>
+{% block title %}
+    <h2> Error </h2>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th colspan="2">
+                    <h2> <strong> {{mensaje}} </strong> </h2>
+                </th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+<script language="JavaScript" type="text/javascript">
+    console.log("alo");
+    setTimeout(function () {
+        window.location.href = "{{ redirection }}";
+    }, 5000);
+    </script>
+{% endblock %}
+</title>
+</head>
+<body>
+
+</body>
+</html>

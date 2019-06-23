@@ -1,3 +1,11 @@
+from django.shortcuts import render,redirect
+from AdministracionViajes.forms import CrearForm
+from Nucleo.models import Viaje,Tramo,Reservacion
+from datetime import datetime,timedelta
+from django.contrib.auth.decorators import user_passes_test
+from Nucleo.models import *
+# Create your views here.
+
 def crear(request):
 	viaje = CrearForm() # se asigna formulario de viajes
 	if request.method == 'POST':
